@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Starwars</string>
+    <string name="err_msg_network">No Network Connected. Internet Error</string>
+</resources>

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Starwars</string>
     <string name="err_msg_network">No Network Connected. Internet Error</string>
+    <string name="na">NA</string>
+    <string name="meter">Meter</string>
+    <string name="kg">kg</string>
 </resources>

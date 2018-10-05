@@ -15,10 +15,13 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
+import okhttp3.internal.Util;
 import pravin.com.starwars.Network.ApiService;
 import pravin.com.starwars.Network.RetrofitExtra;
+import pravin.com.starwars.Network.Utils;
 import pravin.com.starwars.R;
 import pravin.com.starwars.extras.Keys;
 import pravin.com.starwars.extras.NetConnectivity;
@@ -104,7 +107,7 @@ public class DetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint({"SimpleDateFormat", "SetTextI18n"})
     private void parseResponseMore(JSONObject js) {
 
 
@@ -116,8 +119,20 @@ public class DetailActivity extends AppCompatActivity {
                 try {
 
                         tx_name.setText(js.getString(Keys.name));
-                        tx_height.setText(js.getString(Keys.height));
-                        tx_mass.setText(js.getString(Keys.mass));
+                        if(Utils.contains(js,Keys.height)) {
+                            double height = js.getInt(Keys.height) * 0.01;
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMaximumFractionDigits(2);
+                            tx_height.setText(df.format(height) +" "+ getString(R.string.meter));
+                        }
+                        else
+                            tx_height.setText(R.string.na);
+                        if(Utils.contains(js,Keys.mass)) {
+                            if(js.getString(Keys.mass).equals("unknown"))
+                                tx_mass.setText(js.getString(Keys.mass));
+                            else
+                                tx_mass.setText(js.getString(Keys.mass) + " " + getString(R.string.kg));
+                        }
                         tx_dttime.setText(js.getString(Keys.created));
 
 

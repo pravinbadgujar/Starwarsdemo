@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import pravin.com.starwars.Network.ApiService;
 import pravin.com.starwars.Network.RetrofitExtra;
 import pravin.com.starwars.R;
@@ -154,7 +155,20 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             else {
                 if(startpos==1)
                     progressBar.setVisibility(View.GONE);
-                ShowMessage.showError(context, getString(R.string.err_msg_network));
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                        .setContentText(getString(R.string.err_msg_network))
+                        .setConfirmButton("Try Again", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.cancel();
+                                liststars.clear();
+                                startpos=1;
+                                adapter.notifyDataSetChanged();
+                                getStars(startpos);
+                            }
+                        })
+                        .show();
+
             }
         } catch (Exception e) {
             e.printStackTrace();

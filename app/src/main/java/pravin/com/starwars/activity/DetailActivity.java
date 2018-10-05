@@ -1,8 +1,9 @@
 package pravin.com.starwars.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,14 +12,10 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import pravin.com.starwars.Network.ApiService;
 import pravin.com.starwars.Network.RetrofitExtra;
@@ -26,7 +23,6 @@ import pravin.com.starwars.R;
 import pravin.com.starwars.extras.Keys;
 import pravin.com.starwars.extras.NetConnectivity;
 import pravin.com.starwars.extras.ShowMessage;
-import pravin.com.starwars.models.StarModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,8 +77,6 @@ public class DetailActivity extends AppCompatActivity {
                                     Log.e("resp", response.body().toString());
                                     JSONObject jsonObject = new JSONObject(response.body().toString());
                                     parseResponseMore(jsonObject);
-                                } else {
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -110,7 +104,7 @@ public class DetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+    @SuppressLint("SimpleDateFormat")
     private void parseResponseMore(JSONObject js) {
 
 
@@ -120,24 +114,20 @@ public class DetailActivity extends AppCompatActivity {
             {
                 Log.e("Response", js.toString());
                 try {
-                    List<StarModel> result = new ArrayList<>();
-                    result.clear();
-
 
                         tx_name.setText(js.getString(Keys.name));
                         tx_height.setText(js.getString(Keys.height));
                         tx_mass.setText(js.getString(Keys.mass));
                         tx_dttime.setText(js.getString(Keys.created));
 
-                   // Date dt=new Date(js.getString(Keys.created));
 
                     try {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                         SimpleDateFormat output = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
-                        tx_dttime.setText("" + output.format(simpleDateFormat.parse(js.getString(Keys.created))));
+                        tx_dttime.setText(  output.format(simpleDateFormat.parse(js.getString(Keys.created))));
                     }
                     catch (Exception e){
-
+                        e.printStackTrace();
                     }
 
 

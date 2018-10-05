@@ -1,6 +1,7 @@
 package pravin.com.starwars.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +17,14 @@ import pravin.com.starwars.models.StarModel;
 
 public class StarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public final int TYPE_MOVIE = 0;
-    public final int TYPE_LOAD = 1;
+    private final int TYPE_MOVIE = 0;
+    private final int TYPE_LOAD = 1;
 
     static Context context;
     List<StarModel> movies=new ArrayList<>();
-    OnLoadMoreListener loadMoreListener;
-    public boolean isLoading = false, isMoreDataAvailable = true;
-    public static OnItemClickListener clickListener;
+    private OnLoadMoreListener loadMoreListener;
+    private boolean isLoading = false, isMoreDataAvailable = true;
+    private static OnItemClickListener clickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         clickListener = onItemClickListener;
@@ -31,8 +32,7 @@ public class StarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     public StarsAdapter(Context context, List<StarModel> movies) {
-        this.context = context;
-
+        StarsAdapter.context = context;
         this.movies = movies;
     }
 
@@ -49,7 +49,7 @@ public class StarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
 
         if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
@@ -89,10 +89,10 @@ public class StarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class NotificationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
-        public TextView tx_name;
+        TextView tx_name;
 
 
-        public NotificationHolder(View view) {
+        NotificationHolder(View view) {
             super(view);
 
             tx_name = itemView.findViewById(R.id.name);
@@ -119,13 +119,13 @@ public class StarsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     static class LoadHolder extends RecyclerView.ViewHolder {
-        public LoadHolder(View itemView) {
+        LoadHolder(View itemView) {
             super(itemView);
         }
     }
 
     static class Blankholder extends RecyclerView.ViewHolder {
-        public Blankholder(View itemView) {
+        Blankholder(View itemView) {
             super(itemView);
         }
     }

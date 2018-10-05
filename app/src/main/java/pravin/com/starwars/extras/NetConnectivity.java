@@ -1,6 +1,5 @@
 package pravin.com.starwars.extras;
 
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

@@ -15,5 +15,4 @@ public interface ApiService {
     @GET()
     Call<JsonObject> getStars(@Url String url);
 
-
 }
